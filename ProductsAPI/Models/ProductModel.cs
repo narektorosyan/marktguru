@@ -12,6 +12,7 @@ namespace ProductsAPI.Models
         public long Id { get; set; }
 
         [Required]
+        [MaxLength(200)]
         public string Name { get; set; }
 
         [Required]
