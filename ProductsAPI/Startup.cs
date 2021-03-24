@@ -1,11 +1,17 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using ProductsAPI.BusinessServices;
+using ProductsAPI.BusinessServices.Interfaces;
+using ProductsAPI.Entities;
+using ProductsAPI.Repositories;
+using ProductsAPI.Repositories.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -113,6 +119,20 @@ namespace ProductsAPI
             });
 
             #endregion
+
+            #region DB
+
+            services.AddDbContext<ProductContext>(opts => opts.UseSqlServer(Configuration["ConnectionStrings:ProductsDB"]));
+
+            #endregion
+
+            #region Injection
+            
+            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IProductService, ProductService>();
+
+            #endregion
+
             services.AddMvc();
         }
 
