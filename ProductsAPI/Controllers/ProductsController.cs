@@ -66,10 +66,22 @@ namespace ProductsAPI.Controllers
         // POST api/<ProductsController>
         [HttpPost]
         [Authorize]
-        public void Post([FromBody] string value)
+        public IActionResult Post([FromBody] ProductModel product)
         {
             _cache.Remove(allProductsCacheKey);
 
+            try
+            {
+                _productService.AddProduct(product);
+
+            }
+            catch (Exception ex)
+            {
+                //todo handle teh exceptions
+                throw;
+            }
+
+            return Ok();
         }
 
         // PUT api/<ProductsController>/5

@@ -1,4 +1,5 @@
 ﻿using ProductsAPI.BusinessServices.Interfaces;
+using ProductsAPI.Entities;
 using ProductsAPI.Models;
 using ProductsAPI.Repositories.Interfaces;
 using System;
@@ -18,12 +19,21 @@ namespace ProductsAPI.BusinessServices
                 this._productRepository = productRepository;
         }
 
-        public int AddProduct(ProductModel product)
+        public void AddProduct(ProductModel product)
         {
-            throw new NotImplementedException();
+            Product productEntity = new Product
+            {
+                Name = product.Name,
+                Price = product.Price,
+                Description = product.Description,
+                Available = product.Available,
+                DateCreated = product.DateCreated
+            };
+
+            _productRepository.Insert(productEntity, true);
         }
 
-        public Task DeleteProduct(long id)
+        public void DeleteProduct(long id)
         {
             throw new NotImplementedException();
         }
@@ -65,7 +75,7 @@ namespace ProductsAPI.BusinessServices
             }).ToList();
         }
 
-        public Task UpdateProduct(ProductModel product)
+        public void UpdateProduct(ProductModel product)
         {
             throw new NotImplementedException();
         }

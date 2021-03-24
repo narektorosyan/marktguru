@@ -10,8 +10,8 @@ namespace ProductsAPI.BusinessServices.Interfaces
     {
         IList<ProductModel> GetProducts();
         ProductModel GetProductById(long id);
-        int AddProduct(ProductModel product);
-        Task UpdateProduct(ProductModel product);
-        Task DeleteProduct(long id);
+        void AddProduct(ProductModel product);
+        void UpdateProduct(ProductModel product);
+        void DeleteProduct(long id);
     }
 }
