@@ -36,7 +36,7 @@ namespace ProductsAPI.BusinessServices
 
         public void DeleteProduct(long id)
         {
-            throw new NotImplementedException();
+            _productRepository.Delete(id, true);
         }
 
         public ProductModel GetProductById(long id)

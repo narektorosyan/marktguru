@@ -78,6 +78,7 @@ namespace ProductsAPI.Controllers
             catch (Exception ex)
             {
                 //todo handle teh exceptions
+                //logging
                 throw;
             }
 
@@ -99,6 +100,7 @@ namespace ProductsAPI.Controllers
             catch (Exception ex)
             {
                 //todo handle the exceptions
+                //logging
                 throw;
             }
 
@@ -108,9 +110,23 @@ namespace ProductsAPI.Controllers
         // DELETE api/<ProductsController>/5
         [HttpDelete("{id}")]
         [Authorize]
-        public void Delete(int id)
+        public IActionResult Delete(long id)
         {
             _cache.Remove(allProductsCacheKey);
+         
+            try
+            {
+                _productService.DeleteProduct(id);
+
+            }
+            catch (Exception ex)
+            {
+                //todo handle the exceptions
+                //logging
+                throw;
+            }
+
+            return Ok();
 
         }
     }
