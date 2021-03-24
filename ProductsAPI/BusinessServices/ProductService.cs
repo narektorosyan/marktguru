@@ -23,14 +23,30 @@ namespace ProductsAPI.BusinessServices
             throw new NotImplementedException();
         }
 
-        public Task DeleteProduct(int id)
+        public Task DeleteProduct(long id)
         {
             throw new NotImplementedException();
         }
 
-        public ProductModel GetProductById(int id)
+        public ProductModel GetProductById(long id)
         {
-            throw new NotImplementedException();
+            ProductModel productModel = null;
+            var productEntity = _productRepository.GetById(id);
+            if (productEntity != null)
+            {
+                productModel = new ProductModel
+                {
+                    Id = productEntity.Id,
+                    Name = productEntity.Name,
+                    Price = productEntity.Price,
+                    Available = productEntity.Available,
+                    Description = productEntity.Description,
+                    DateCreated = productEntity.DateCreated,
+                    Version = productEntity.RowVersion
+                };
+            }
+
+            return productModel;
         }
 
         public IList<ProductModel> GetProducts()

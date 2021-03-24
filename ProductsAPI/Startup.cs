@@ -133,6 +133,7 @@ namespace ProductsAPI
 
             #endregion
 
+            services.AddMemoryCache();
             services.AddMvc();
         }
 
