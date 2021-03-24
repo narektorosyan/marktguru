@@ -1,4 +1,5 @@
-﻿using ProductsAPI.BusinessServices.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using ProductsAPI.BusinessServices.Interfaces;
 using ProductsAPI.Entities;
 using ProductsAPI.Models;
 using ProductsAPI.Repositories.Interfaces;
@@ -27,7 +28,7 @@ namespace ProductsAPI.BusinessServices
                 Price = product.Price,
                 Description = product.Description,
                 Available = product.Available,
-                DateCreated = product.DateCreated
+                DateCreated = DateTime.Now,
             };
 
             _productRepository.Insert(productEntity, true);
@@ -77,7 +78,26 @@ namespace ProductsAPI.BusinessServices
 
         public void UpdateProduct(ProductModel product)
         {
-            throw new NotImplementedException();
+            Product productEntity = new Product
+            {
+                Id = product.Id,
+                Name = product.Name,
+                Price = product.Price,
+                Description = product.Description,
+                Available = product.Available,                
+                RowVersion = product.Version
+            };
+            try
+            {
+                _productRepository.Update(productEntity, true);
+
+            }
+            catch (DbUpdateException ex)
+            {
+                //todo handle concurrency
+                // if RowVersion is not matched 
+                throw;
+            }
         }
     }
 }

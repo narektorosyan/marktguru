@@ -87,9 +87,22 @@ namespace ProductsAPI.Controllers
         // PUT api/<ProductsController>/5
         [HttpPut("{id}")]
         [Authorize]
-        public void Put(int id, [FromBody] string value)
+        public IActionResult Put(long id, [FromBody] ProductModel product)
         {
             _cache.Remove(allProductsCacheKey);
+            try
+            {
+                product.Id = id;
+                _productService.UpdateProduct(product);
+
+            }
+            catch (Exception ex)
+            {
+                //todo handle the exceptions
+                throw;
+            }
+
+            return Ok();
         }
 
         // DELETE api/<ProductsController>/5
